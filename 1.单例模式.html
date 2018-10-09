@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>单例模式</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    //单例模式,模块化编程
+    var MyWorkSpace = {
+        learning : function(){
+            console.log('learning...');
+        },
+        playing:function () {
+            this.learning();
+            console.log('playing...');
+        }
+    };
+
+    MyWorkSpace.learning();
+</script>

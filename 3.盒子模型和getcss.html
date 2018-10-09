@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>盒子模型</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            margin: 100px;
+            padding: 30px;
+            width: 200px;
+            height: 200px;
+            border: 5px solid darkred;
+            overflow: auto;
+            line-height: 30px;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+        }
+    </style>
+</head>
+<body>
+<div id="box" class="test" index="0">
+    本书从最早期Netscape浏览器中的JavaScript开始讲起，直到当前它对XML和Web服务的具体支持，内容主要涉及JavaScript的语言特点、JavaScript与浏览器的交互、更高级的JavaScript技巧，以及与在Web应用程序中部署JavaScript解决方案有关的问题，如错误处理、调试、安全性、优化/混淆化、XML和Web服务，最后介绍应用所有这些知识来创建动态用户界面。
+</div>
+</body>
+</html>
+<script src="./jquery-3.3.1.min.js"></script>
+<script>
+    // HTMLDivElement.prototype ->
+    // HTMLElement.prototype ->
+    // Element.prototype ->
+    // Node.prototype ->
+    // EventTarget.prototype ->
+    // Object.prototype
+    var box = document.getElementById('box');
+    console.dir(box);
+
+
+    //1
+    // function Topic() {
+    //
+    // }
+    // Topic.prototype = {
+    //   playing: function () {
+    //       console.log('playing');
+    //   },
+    //   running: function () {
+    //       console.log('running');
+    //   }
+    // };
+    // var topic = new Topic();
+    // topic.playing();
+    // topic.running();
+
+    //2
+    // var Topic = {
+    //     playing: function () {
+    //         console.log('playing');
+    //     },
+    //     running: function () {
+    //         console.log('running');
+    //     }
+    // }
+
+    box.classList.add('test1');
+    console.log(box.attributes.getNamedItem('class'));
+    console.log(box.attributes.item(0));
+
+    //一：
+    //1.client系列, 只可读
+    //->clientWidth/clientHeight:内容的宽度/高度+左右/上下填充
+    //->clientLeft, clientTop: 左边框的宽度/高度, border
+
+    box.contentEditable = true
+
+    //2.offset系列,只可读
+    //->offsetWidth/offsetHeight:clientWidth/clientHeight + 左右/上下边框
+    //->offsetParent:当前元素的父级参照物
+    //->offsetLeft/offsetTop:当前元素的外边框距离父级元素的内边框的距离
+
+    //3.scroll系列,只可读
+    //->scrollWidth/scrollHeight
+    // 1.没有溢出：
+    //   和clientWidth、clientHeight一样
+    // 2.有溢出：
+    //   scrollWidth：真实内容的宽度 + 左填充
+    //   scrollHeight：真实内容的高度 + 上填充
+    //->获取到的结果都是“约等于”的值,因为同一个浏览器,我们是否设置overflow=‘hidden’
+    //  对于最终的结果是有影响的;在不同的浏览器中,我们获取到的结果也是不相同的;
+
+    //->scrollLeft/scrollTop:滚动条卷去的宽度/高度,可读写
+
+    //二：关于JS盒子模型属性取值的问题
+    //->我们通过这13个属性之获取的结果永远不可能是小数,都是整数;浏览器在获取结果的时候,
+    //  会在原来真实结果的基础上进行四舍五入;
+
+    //三：关于浏览器本身的盒子模型属性
+    //->clientWidth/clientHeight,一屏幕的宽高
+    //->scrollWidth/scrollHeight,所有屏加起来的宽度和高度(一个约值)
+    // 兼容
+    //  document.documentElement[attr] || document.body[attr];
+    // [设置也需要写两套] 例:
+    // document.documentElement.scrollTop = 0
+    // document.body.scrollTop = 0;
+
+    //->win:编写一个有关于操作浏览器盒子模型的方法
+    function win(attr, value) {
+        if (typeof value === 'undefined') {
+            return document.documentElement[attr] || document.body[attr]
+        } else {
+            document.documentElement[attr] = value;
+            document.body[attr] = value;
+        }
+    }
+
+    //console.log(window.getComputedStyle);
+    console.log(window.getComputedStyle(box, null).height);
+
+    function getCss(curEle, attr) {
+        var val = null, reg = null;
+        // try{
+        //     val = window.getComputedStyle(curEle, null)[attr];
+        // }catch(e){
+        //     val = curEle.currentStyle[attr];
+        // }
+        if ('getComputedStyle' in window) {
+            val = window.getComputedStyle(curEle, null)[attr];
+        } else {
+            if (attr === 'opacity') {
+                val = curEle.currentStyle['filter'];
+                reg = /^alpha\(opacity=(\d+(?:\.\d+)?)\)$/i;
+                val = reg.test(val) ? reg.exec(val)[1] / 100 : 1
+            } else {
+                val = curEle.currentStyle[attr];
+            }
+        }
+        // if (/MSIE (6|7|8)/.test(navigator.userAgent)) {
+        //     val = curEle.currentStyle[attr];
+        // } else {
+        //     val = window.getComputedStyle(curEle, null)[attr];
+        // }
+        reg = /^(-?\d+(\.\d+)?)(px|pt|rem|em)?$/i;
+        return reg.test(val) ? parseFloat(val) : val;
+    }
+
+    console.log(getCss(box, 'height'));
+    console.log(getCss(box, 'border'));
+    console.log(getCss(box, 'opacity'));
+    console.log(window.navigator.userAgent);
+</script>

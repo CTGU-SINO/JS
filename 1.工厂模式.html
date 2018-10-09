@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>工厂模式</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    function createJSPerson(name, age) {
+        var obj = {};
+        obj.name = name;
+        obj.age = age;
+        obj.print = function () {
+            console.log("I'm "+this.name+" age:"+this.age);
+        };
+        return obj;
+    }
+    var p1 = createJSPerson('aaa', 18);
+    p1.print();
+</script>

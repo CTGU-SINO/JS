@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>延迟加载</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        img {
+            display: block;
+            border: none;
+        }
+
+        .banner {
+            margin: 1000px auto;
+            width: 350px;
+            height: 200px;
+            border: 1px solid green;
+            background: url("loading.gif") no-repeat center center #e1e1e1;
+        }
+
+        .banner img {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="banner" id="banner">
+    <img src="" trueImg="pre_ct.png"/>
+</div>
+</body>
+</html>
+<script src="utils.js"></script>
+<script>
+    var banner = document.getElementById('banner'),
+        imgFir = banner.getElementsByTagName('img')[0];
+
+    window.onscroll = function () {
+        if(banner.isload){
+            return;
+        }
+        var height = utils.offset(banner).top + banner.offsetHeight;
+        var curHeight = utils.win('scrollTop') + utils.win('clientHeight');
+        if (height < curHeight) {
+            var oImg = new Image;
+            oImg.onload = function () {
+                console.log('111111');
+                imgFir.src = this.src;
+                imgFir.style.display = 'block';
+                oImg = null;
+            };
+            oImg.src = imgFir.getAttribute('trueImg');
+            banner.isload = true;
+        }
+    };
+    // window.setTimeout(function () {
+    //     // imgFir.src = imgFir.getAttribute('trueImg');
+    //     // imgFir.style.display = 'block';
+    //     var oImg = new Image;
+    //     oImg.src = imgFir.getAttribute('trueImg');
+    //     oImg.onload = function () {
+    //         imgFir.src = this.src;
+    //         imgFir.style.display = 'block';
+    //         oImg = null;
+    //     }
+    // }, 500);
+    // console.log(utils.offset(banner).top);
+    // console.log(banner.offsetHeight);
+</script>

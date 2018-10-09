@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>回调函数</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    // 回调函数
+    function fn(callback) {
+        callback();
+    }
+
+    fn(function () {
+
+    });
+
+    var st = 'a=1&page=10';
+    console.log(st.replace(/page=\d+/g, 'page=' + 2));
+
+    var obj = {name: '珠峰培训'};
+    var ary = [12, 23, 34, 45, 56];
+
+    var a = ary.slice(2);
+    console.log(a);
+
+    //1.forEach中的this默认值的是window
+    ary.forEach(function (value, index) {
+        console.log(this);
+    }.bind(obj));
+    //2.
+    ary.forEach(function (value, index) {
+        console.log(this);
+    }, obj);
+
+    'zhufeng'.replace(/\w/g, function () {
+        console.log(this);
+    }.bind(obj));
+
+    Array.prototype.myForEach = function myForEach(callback, context) {
+        context = context || window;
+        if ('forEach' in Array.prototype){
+            this.forEach(callback, context);
+            return;
+        }else{
+            for (var i = 0, len = this.length; i < len; i++){
+                callback && callback.call(context, this[i], i, this);
+            }
+        }
+    };
+
+
+
+</script>

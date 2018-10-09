@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>六种继承</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    function A() {
+        this.x = 100;
+    }
+    A.prototype.getX = function () {
+        console.log(this.x);
+    };
+
+    //原型继承
+    function B() {
+
+    }
+
+    B.prototype = new A;
+    B.prototype.constructor = B;
+    var b = new B();
+    console.dir(b);
+
+    //call继承
+    function C() {
+        A.call(this);
+    }
+
+    var c = new C();
+    console.dir(c);
+
+    //混合继承
+    function D() {
+        A.call(this);
+    }
+    D.prototype = new A;
+    D.prototype.constructor = D;
+    var d = new D();
+    console.dir(d);
+
+    //冒充继承
+    function E() {
+        var obj = new A;
+        for(var key in obj){
+            this[key] = obj[key];
+        }
+        obj = null;
+    }
+    var e = new E();
+    console.dir(e);
+    e.getX();
+
+    //寄生继承
+    function F() {
+        A.call(this);
+    }
+    F.prototype = Object.create(A.prototype);
+    F.prototype.constructor = F;
+    var f = new F();
+    console.dir(f);
+</script>

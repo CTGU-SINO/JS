@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>jQuery UI 日期选择器（Datepicker） - 其他月份的日期</title>
+    <link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="jquery-ui/jquery-ui.min.js"></script>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker({
+                dateFormat: 'yy-mm-dd',
+                showOtherMonths: true,
+                selectOtherMonths: true
+            });
+        });
+    </script>
+</head>
+<body>
+
+<p>日期：<input type="text" id="datepicker"></p>
+
+
+</body>
+</html>

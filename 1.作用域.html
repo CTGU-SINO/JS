@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>作用域</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    function fn(i) {
+        return function (n) {
+            console.log(n + i++);
+        }
+    }
+
+    var f = fn(13);
+    f(12); // i=13, n=12    作用域不销毁
+    f(13); // i=14, n=14
+    fn(13)(12);     // 作用域暂时不销毁
+    fn(13)(13);
+
+
+    var num = 20;
+    var obj = {
+        num: 30,
+        fn: (function (num) {
+            this.num *= 3;
+            num += 15;
+            var num = 45;
+            return function () {
+                this.num *= 4;
+                num += 20;
+                console.log(num);
+            }
+        })(num)
+    };
+    var fn = obj.fn;
+    fn();
+    obj.fn();
+
+    var ary = [12, 23, 34, 45, 56];
+    ary.forEach(function (value, index) {
+        this[index].onclick = (function (n) {
+            return function () {
+                console.log(n);
+                //闭包,形成一个不可销毁的作用域
+            }
+        })(index);
+    },ary);
+
+    var fx = (function (n) {
+        return function () {
+            console.log(n);
+            return n;
+        }
+    })(10);
+    console.log(fx());
+</script>

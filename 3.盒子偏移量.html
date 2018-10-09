@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>盒子偏移量</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #outer {
+            margin: 50px auto;
+            padding: 50px;
+            width: 196px;
+            height: 196px;
+            border: 2px solid #000000;
+            background: orange;
+        }
+
+        #inner {
+            padding: 50px;
+            width: 96px;
+            height: 96px;
+            border: 2px solid #000000;
+            background: green;
+        }
+
+        #center {
+            width: 96px;
+            height: 96px;
+            border: 2px solid #000000;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<div id="outer">
+    <div id="inner">
+        <div id="center">
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var outer = document.getElementById('outer'),
+        inner = document.getElementById('inner'),
+        center = document.getElementById('center');
+    //1,父亲节点
+    console.log(outer.parentNode);
+    console.log(inner.parentNode);
+    console.log(center.parentNode);
+    //2,offsetParent:父级参照物 在同一平面中，最外层的元素是里面所有元素的父级参照物(和HTML层级结构没有必然联系)
+    console.log(outer.offsetParent);
+    console.log(inner.offsetParent);
+    console.log(center.offsetParent);
+    console.log(document.body.offsetParent);
+    //->通过position定位改变父级参照物 absolute,relative,fixed
+    outer.style.position = 'relative';
+    console.log(center.offsetParent);
+    console.log(inner.offsetParent);
+    console.log(outer.offsetParent);
+
+    function offset(curEle) {
+        var totalLeft = null,
+            totalTop = null,
+            par = curEle.offsetParent;
+        totalLeft += curEle.offsetLeft;
+        totalTop += curEle.offsetTop;
+        while (par) {
+            totalLeft += par.clientLeft;
+            totalTop += par.clientTop;
+
+            totalLeft += par.offsetLeft;
+            totalTop += par.offsetTop;
+
+            par = par.offsetParent;
+        }
+        return {left: totalLeft, top: totalTop}
+    }
+
+    console.log(offset(center));
+
+</script>

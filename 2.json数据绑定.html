@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Json数据绑定</title>
+</head>
+<body>
+<ul id="ul1">
+    <li><span class="bg">1</span>俩大爷暴雨中下棋</li>
+    <li><span class="bg">2</span>俄女子被骗至义乌</li>
+    <li><span class="bg">3</span>纣王妲己成代言人</li>
+</ul>
+<ul id="ul2">
+    <li>98</li>
+    <li>99</li>
+    <li>96</li>
+    <li>95</li>
+    <li>90</li>
+</ul>
+
+
+</body>
+</html>
+<script src="./jquery-3.3.1.min.js"></script>
+<script>
+    var oU1 = $("#ul1");
+    var oLis = $("#ul1 li");
+    for (var i = 0; i < oLis.length; i++) {
+        oLis[i].onmouseover = function () {
+            this.style.backgroundColor = 'pink';
+        };
+        oLis[i].onmouseout = function () {
+            this.style.backgroundColor = '';
+        }
+    }
+    var ary = [
+        {title: "华帝退全款完成"},
+        {title: "护士腿部跪出青紫"},
+        {title: "被逼生娃愤而报警"},
+        {title: "星巴克业绩下滑"},
+        {title: "北京减量共享单车"},
+        {title: "安东尼度过澄清期"},
+        {title: "欧盟对俄追加制裁"}
+    ];
+    var frg = document.createDocumentFragment();
+    for (var i = 0; i < ary.length; i++) {
+        var $oLi = document.createElement("li")
+        $oLi.innerHTML = '<span>' + (i + 4) + '</span>' + ary[i].title;
+
+        frg.append($oLi);
+
+
+        // var oLi = $('<li><span>' + (i + 4) + '</span>' + ary[i].title + '</li>');
+        // oU1.append(oLi);
+    }
+    oU1.append(frg);
+    frg = null;
+
+    var oU2 = $("#ul2");
+    var oLi2s = $("#ul2 li");
+    var ary2 = Array.prototype.slice.call(oLi2s);
+    console.log(ary2);
+    ary2.sort(function (a, b) {
+        return a.innerText - b.innerText;
+    });
+    console.log(ary2);
+    var frg2 = document.createDocumentFragment();
+    for (var i = 0; i < ary2.length; i++) {
+        frg2.append(ary2[i]);
+    }
+    oU2.append(frg2);
+    frg2 = null;
+
+    // DOM 映射机制
+</script>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>插件</title>
+    <style>
+        #plugin {
+            width: 30px;
+            height: 30px;
+            background: #1b6d85;
+        }
+    </style>
+</head>
+<body>
+<div id="plugin"></div>
+</body>
+</html>
+<script src="./jquery-3.3.1.min.js"></script>
+<script src="./插件.js"></script>
+<script>
+    $('#plugin').bootstrapPaginator({
+        currentPage: 1,
+        totalPages: 5,
+        numberOfPages: 3
+    });
+
+    $('#plugin').trigger('click');
+
+    HTMLElement.prototype.myClick = function () {
+        console.log($('#plugin').css('width'));
+        if (1) {
+            this.css('background', '#c4e3f3');
+        } else {
+            this.css('background', '#1b6d85');
+        }
+    };
+
+    HTMLElement.prototype.myClick.call($('#plugin'));
+</script>

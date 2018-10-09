@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原型链模式扩展</title>
+</head>
+<body>
+    <label id="label">10</label>
+</body>
+</html>
+<script>
+    function Fn() {
+        this.x = 100;
+        this.y = 200;
+        this.getY = function () {
+            console.log(this.y);
+        }
+    }
+
+    Fn.prototype = {
+        constructor: Fn,
+        y: 300,
+        getX:function () {
+            console.log(this.x);
+        },
+        getY:function () {
+            console.log(this.y);
+        }
+    };
+    var f = new Fn;
+    f.getX();           // this = f.x
+    f.__proto__.getX(); // this = f.__proto__.x
+
+    f.getY();
+    f.__proto__.getY();
+
+    Array.prototype.myUnique = function () {
+
+    };
+    var ary = [];
+    ary.myUnique();
+    ary.__proto__.myUnique();
+    Array.prototype.myUnique();
+
+    Number.prototype.add = function (num) {
+        return this + num;
+    };
+
+    Number.prototype.reduce = function (num) {
+        return this - num;
+    };
+
+    console.log((5).add(10).reduce(2));
+
+    var l = document.getElementById("label");
+    console.log(l);
+
+    HTMLLabelElement.prototype.myFunction = function () {
+        this.onclick = function () {
+            this.innerHTML--;
+        }
+    };
+
+    l.myFunction();
+</script>

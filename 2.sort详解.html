@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sort详解</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    var ary = [34, 12, 23, 35, 21, 43, 24];
+    // 回调函数
+    ary.sort(function (a, b) {
+        return a - b;   //return 1; 数组反转
+    });
+    console.log(ary.toString());
+
+    ary.sort(function (a, b) {
+        return 1;   //return 1; 数组反转
+    });
+    console.log(ary.toString());
+
+    var person = [
+        {name: '吴军', age: 23},
+        {name: '盛俊', age: 21},
+        {name: '碉堡', age: 25},
+        {name: '蔡昭', age: 24}
+    ];
+    person.sort(function (a, b) {
+        return a.age - b.age;
+    });
+    console.log(person);
+
+    var person = [
+        {name: '吴军', age: 23},
+        {name: '盛俊', age: 21},
+        {name: '碉堡', age: 25},
+        {name: '蔡昭', age: 24}
+    ];
+    person.sort(function (a, b) {
+        return a.name.localeCompare(b.name) * -1;
+    });
+    console.log(person);
+</script>

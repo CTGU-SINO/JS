@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>异步编程</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+
+    //异步编程
+    //1.定时器
+    //2.事件绑定
+    //3.ajax
+    //4.回调函数
+
+    var n = 0;
+    window.setTimeout(function () {
+        n += 2;
+        console.log(n);
+    }, 5);
+    window.setTimeout(function () {
+        n += 5;
+        console.log(n);
+    }, 2);
+    console.log(n);
+    for( var i=0; i++; i < 100000){};
+    n++;
+    console.log(n);
+
+</script>

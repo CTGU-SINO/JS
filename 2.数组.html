@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组</title>
+</head>
+<body>
+
+</body>
+</html>
+<script src="jquery-3.3.1.min.js"></script>
+<script>
+    // sort
+    var ary = [34, 12, 23, 35, 21, 43, 24];
+    // 回调函数
+    ary.sort(function (a, b) {
+        return a - b;   //return 1; 数组反转
+    });
+    var min = ary[0];
+    var max = ary[ary.length - 1];
+    console.log(min, max);
+
+    // 假设法
+    var ary1 = [34, 12, 23, 35, 21, 43, 24];
+    var min = max = ary1[0];
+    for (var i = 0; i <= ary1.length; i++) {
+        max < ary1[i] ? max = ary1[i] : max;
+        min > ary1[i] ? min = ary1[i] : min;
+    }
+    console.log(min, max);
+
+    // apply
+    var ary2 = [34, 12, 23, 35, 21, 43, 24];
+    var min = Math.min.apply(null, ary2);
+    var max = Math.max.apply(null, ary2);
+    console.log(min, max);
+
+    // apply
+    var ary3 = [34, 12, 23, 35, 21, 43, 24];
+    var min = eval("Math.min(" + ary3.toString() + ")");  //join,toString
+    var max = eval("Math.max(" + ary3.toString() + ")");
+    console.log(min, max);
+
+    $.each(ary3, function(index, value){
+       console.log(value);
+    });
+
+
+    // 类数组转化为数组
+    console.log(ary3.slice());
+
+    function avgFn() {
+        console.log(Array.prototype.slice.call(arguments));
+        Array.prototype.sort.call(arguments);
+        console.log(arguments);
+    }
+
+    avgFn(4, 7, 2, 8, 3, 9, 1, 5, 6);
+
+    // HTMLCollection,NodeList
+    //
+    // function aaa() {
+    //     console.log(Array.prototype.slice.call(arguments, 2));
+    // }
+    //
+    // aaa(1, 2, 3, 4, 5);
+</script>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>构造函数</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    function CreateJSPerson(name, age) {
+        this.name = name;
+        this.age = age;
+        this.print = function () {
+            console.log("I'm "+this.name+" age:"+this.age);
+        }
+    }
+    var p1 = new CreateJSPerson('aaa', 18);
+    p1.print();
+
+    var res = CreateJSPerson('bb', 20);
+    console.log(res);
+
+    function Fn(){
+        var num = 10;
+        this.x = 100;
+        this.getX = function () {
+            console.log(this.x);
+        }
+        //return 基本类型无影响
+        //return obj 覆盖构造模式生成的对象
+    }
+    var f = new Fn; //无参构造函数
+    f.getX();
+    console.log('getX' in f);
+    console.log(f.hasOwnProperty('getX'));
+    console.log(f.num);
+    CreateJSPerson.prototype.type = 'person';   //公有属性
+
+    // 匿名构造函数
+    var Person = function (name, age) {
+        this.init(name, age);
+    };
+
+    Person.prototype = {
+        init: function (name, age) {
+            this.name = name;
+            this.age = age;
+            this.height = 175;
+        },
+        show: function () {
+            console.log(this);
+        }
+    };
+    var p = new Person('aa', 20);
+    p.show();
+</script>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="./bootstrap.min.css" rel="stylesheet">
+    <style>
+        .paginator > .active > a {
+            background-color: #179AA7;
+            border-color: #179AA7;
+        }
+    </style>
+</head>
+<body>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th class="text-center">#</th>
+        <th>任务ID</th>
+        <th>任务名称</th>
+        <th>执行用户</th>
+        <th>执行结果</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<div id="example" style="text-align: center">
+    <ul id="pageLimit"></ul>
+</div>
+</body>
+</html>
+<script src="./jquery-3.3.1.min.js"></script>
+<script src="./bootstrap.min.js"></script>
+<script src="./bootstrap-paginator.js"></script>
+<script>
+    $('#pageLimit').bootstrapPaginator({
+        currentPage: 1,
+        totalPages: 5,
+        size: "small",
+        bootstrapMajorVersion: 3,
+        alignment: "right",
+        numberOfPages: 3,
+        itemTexts: function (type, page, current) {
+            switch (type) {
+                case "first":
+                    return "首页";
+                case "prev":
+                    return "<<";
+                case "next":
+                    return ">>";
+                case "last":
+                    return "末页";
+                case "page":
+                    return page;
+            }//默认显示的是第一页。
+        },
+        onPageClicked: function (event, originalEvent, type, page) {//给每个页眉绑定一个事件，其实就是ajax请求，其中page变量为当前点击的页上的数字。
+            $.ajax({
+                type: "post",
+                url: "http://localhost:8000/showApplyData",
+                data: JSON.stringify({
+                    "uid": 1,
+                    "num": 0,
+                    "page": page,
+                    "limit": 3,
+                    "sort": "+id"
+                }),
+                headers: {
+                    'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1MjIzNzg4ODMuMzE1OTk3LCJ1c2VyaWQiOiIxIiwiYXVkIjoid3d3LmppYW5wZWljbi5jb20iLCJleHAiOjIxMjIzNzk3ODIuMTQwMzR9.6nhAUc8OmZOr-iOZ6la-g0VfzTWKmIhMw33X4EmZfnI'
+                },
+                cache: true,
+                success: function (data) {
+                    $('tbody').empty();
+                    $('#last_page').text(page_count)
+                    showData(page, data);
+                }
+            })
+        }
+    });
+
+    function showData(page, data) {
+        $('tbody').empty().hide();
+        var l = data.result;
+        for (var index = 0; index < l.length; index++) {
+            var $tr = $('<tr class="bg_b"></tr>');
+            var status = '申请';
+            var $td = $('<td class="example_name">' +
+                '<div>' +
+                '<img src=' + l[index]['img_url'] + '/>' +
+                '<div>' +
+                '<span>' + l[index]['data_name'] + '</span>' +
+                '<div>' +
+                '<i class="example_header">简介:</i>' +
+                '<i class="example_content">' +
+                l[index]['summary'] +
+                '' +
+                '</i>' +
+                '<div class="clear"></div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</td>' +
+                '<td class="example_permit">数据包(20例)</td>' +
+                '<td class="example_operation">' + status + '</td>');
+            $tr.append($td);
+            $('tbody').append($tr).fadeIn(0);
+            $('td.example_operation')[index].onclick = (function (n) {
+                return function () {
+                    location.href = '/login';
+                }
+            })(index);
+        }
+    }
+
+</script>

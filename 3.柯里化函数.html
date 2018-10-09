@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>柯里化函数</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    function bind(callback, content) {
+        content = content || window;
+        var outArg = Array.prototype.slice.call(arguments, 2);
+        console.log(outArg);
+        return function () {
+            callback.apply(content, outArg);
+        }
+    }
+
+    var obj = {name: 'ct'};
+    window.setTimeout(bind(fn, obj, 1, 2, 3), 1000);
+
+    function fn() {
+        console.log(this);
+    }
+
+    function event(a, b, e){
+        console.log(this, a, b, e)
+    }
+
+    document.documentElement.onclick = event.bind(obj, 100, 200);
+    document.body.onclick = event.bind(obj, 100, 200);
+</script>

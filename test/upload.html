@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form class="form-horizontal" role="form" id="fileUploadForm" action="/sys/uploadFolder" name="fileUploadForm"
+      method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <input id="fileFolder" name="fileFolder" type="file" webkitdirectory><span id="msg" style="color:#F00"></span>
+    </div>
+    <button type="button" class="btn btn-primary" id="subButton" onclick="commit()">Submit</button>
+</form>
+
+</body>
+</html>

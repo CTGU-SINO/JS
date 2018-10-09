@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>定时器</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    // 定时器加载有延迟
+    var timer1 = window.setTimeout(function () {
+        console.log('第一个定时器');
+    }, 1000);
+    console.log(timer1);        //递归实现计时
+
+    var timer2 = window.setTimeout(function () {
+        console.log('第一个定时器');
+    }, 1000);
+    console.log(timer2);
+
+    var timer3 = window.setInterval(function () {
+        console.log('第一个定时器');
+    }, 1000);
+    console.log(timer3);
+
+    window.clearTimeout(1); //清除第一个定时器
+
+    window.clearInterval(timer2);
+</script>

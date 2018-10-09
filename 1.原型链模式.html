@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原型链模式</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    // function Person(name) {
+    //     this.name = name;
+    // }
+    //
+    // function Mother() {
+    // }
+    //
+    // Mother.prototype = {      //Mother的原型
+    //
+    //     age: 18,
+    //
+    //     home: ['Beijing'],
+    //
+    //     play: function () {
+    //         console.log('play...');
+    //     }
+    //
+    // };
+    //
+    // Person.prototype = new Mother();   //Person的原型为Mother
+    //
+    // var p1 = new Person('jack');
+    // console.log(p1.age,p1.home);
+    // p1.play();
+
+
+    function Fn() {
+        this.x = 100;
+    }
+    Fn.prototype.getX = function () {
+        console.log(this.x);
+    };
+
+    var f1 = new Fn;
+    var f2 = new Fn;
+
+    console.log(Fn.prototype.constructor);
+</script>
